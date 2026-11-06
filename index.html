@@ -320,16 +320,12 @@ nav .section-nav[aria-current]::after, nav .section-nav:hover::after { transform
 .personal-title-row > p { margin: 0; max-width: 460px; color: #4b5848; font-size: 17px; line-height: 1.7; }
 .personal-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 24px; margin-top: 58px; }
 .interest-card { min-width: 0; }
-.photo-placeholder { position: relative; aspect-ratio: 1.18; display: grid; place-items: center; overflow: hidden; border-radius: 6px; border: 1px solid rgba(24,32,24,.1); background: #d9e1ce; }
-.travel-placeholder { background: #d5dfcc; color: #42583b; }
-.fitness-placeholder { background: #212b23; color: #a9c578; }
-.cooking-placeholder { background: #dfdccf; color: #68644b; }
-.interest-illustration { width: 73%; max-height: 78%; stroke: currentColor; stroke-width: 1.2; opacity: .72; }
-.route-line { stroke-dasharray: 4 5; }
-.route-point { fill: currentColor; stroke: none; }
-.fitness-ring { stroke-dasharray: 2 9; }
-.placeholder-corner { position: absolute; top: 18px; left: 18px; font-size: 9px; text-transform: uppercase; letter-spacing: .14em; font-weight: 700; }
-.photo-note { position: absolute; bottom: 18px; font-size: 10px; letter-spacing: .06em; opacity: .8; }
+.interest-photo { position: relative; aspect-ratio: 1.18; display: block; overflow: hidden; border-radius: 6px; background: #d5dfcc; }
+.interest-photo img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.interest-photo:hover img { transform: scale(1.035); }
+.activity-photo img { object-position: center 62%; }
+.food-photo img { object-position: center 57%; }
+.interest-photo-label { position: absolute; top: 14px; left: 14px; padding: 7px 10px; color: #fff; background: rgba(8,16,8,.72); border-radius: 3px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; }
 .interest-copy { padding: 24px 2px 0; }
 .interest-label { margin-bottom: 12px; color: #53623e; text-transform: uppercase; letter-spacing: .14em; font-size: 10px; font-weight: 700; }
 .interest-copy h3 { font-family: var(--serif); font-size: clamp(25px, 2.2vw, 33px); line-height: 1.2; letter-spacing: -.025em; margin-bottom: 15px; }
@@ -341,11 +337,45 @@ nav .section-nav[aria-current]::after, nav .section-nav:hover::after { transform
 .personal-closing a { margin-left: auto; font-weight: 700; font-size: 12px; }
 .personal-closing a > span { margin-left: 16px; }
 
+.photo-journal { margin-top: clamp(70px, 8vw, 115px); padding-top: 40px; border-top: 1px solid rgba(24,32,24,.18); }
+.journal-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 35px; }
+.journal-heading .personal-kicker { font-size: 10px; color: #53623e; margin-bottom: 16px; }
+.journal-heading h3 { font-family: var(--serif); font-size: clamp(36px,4vw,58px); line-height: 1.05; letter-spacing: -.04em; margin: 0; }
+.journal-heading > p { max-width: 340px; margin: 0; color: #4b5848; font-size: 14px; }
+.gallery-toolbar { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding: 28px 0 22px; }
+.gallery-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.gallery-filters button { border: 1px solid rgba(24,32,24,.2); background: transparent; color: #354530; border-radius: 99px; padding: 9px 15px; font: 600 11px var(--sans); cursor: pointer; transition: color .2s, background .2s; }
+.gallery-filters button[aria-pressed="true"], .gallery-filters button:hover { background: #192a1c; color: #f8faf4; border-color: #192a1c; }
+.gallery-count { margin: 0; color: #5c6852; font-size: 11px; }
+.photo-gallery { columns: 4; column-gap: 16px; }
+.gallery-item { position: relative; display: block; width: 100%; margin-bottom: 16px; break-inside: avoid; overflow: hidden; background: #cbd4bf; border-radius: 6px; }
+.gallery-item img { display: block; width: 100%; height: auto; transition: transform .35s ease; }
+.gallery-item:hover img { transform: scale(1.035); }
+.gallery-item:focus-visible { outline-offset: 3px; }
+.gallery-caption { position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 40px 13px 13px; background: linear-gradient(transparent,rgba(0,0,0,.75)); color: #fff; font-size: 11px; line-height: 1.4; }
+.gallery-caption > span { font-size: 20px; line-height: 1; }
+.photo-gallery [hidden], .gallery-filters[hidden] { display: none !important; }
+.gallery-hint { margin: 10px 0 0; color: #5c6852; font-size: 11px; }
+.photo-viewer-open { overflow: hidden; }
+.photo-dialog { width: min(1100px,calc(100vw - 32px)); height: min(92dvh,960px); max-width: none; max-height: none; padding: 0; color: #fff; background: #0b100c; border: 1px solid rgba(134,188,37,.3); border-radius: 10px; }
+.photo-dialog::backdrop { background: rgba(0,0,0,.87); backdrop-filter: blur(5px); }
+.viewer-shell { height: 100%; display: grid; grid-template-rows: auto minmax(0,1fr) auto; padding: 16px 24px; gap: 14px; }
+.viewer-toolbar, .viewer-controls { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+.viewer-toolbar h2 { margin: 0; color: #cbd5c2; font: 500 12px var(--sans); }
+.photo-dialog button { padding: 10px 13px; font: 600 12px var(--sans); color: #fff; background: #1c271e; border: 1px solid #354535; border-radius: 5px; cursor: pointer; }
+.photo-dialog button:hover { color: #000; background: var(--accent); }
+.viewer-close span { margin-left: 12px; font-size: 18px; }
+.viewer-figure { display: grid; grid-template-rows: minmax(0,1fr) auto; gap: 12px; min-height: 0; margin: 0; }
+.viewer-figure img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.viewer-figure figcaption { text-align: center; color: #cbd5c2; font-size: 12px; }
+#viewer-position { font-size: 11px; color: #a7b59e; }
+
 @media (max-width: 900px) {
   nav .contact-nav { display: none; }
   nav { gap: 20px; }
   .personal-title-row { grid-template-columns: 1fr; gap: 24px; }
   .personal-grid { gap: 18px; }
+  .photo-gallery { columns: 3; }
   .working-style { grid-template-columns: 1fr; }
   .hero { grid-template-columns: 1fr; padding-top: 85px; }
   .hero-panel { max-width: 430px; }
@@ -370,7 +400,16 @@ nav .section-nav[aria-current]::after, nav .section-nav:hover::after { transform
   .nav-cta { padding: 8px 12px; }
   .personal-section { padding-inline: 20px; }
   .personal-grid { grid-template-columns: 1fr; gap: 40px; margin-top: 38px; }
-  .photo-placeholder { aspect-ratio: 1.35; }
+  .interest-photo { aspect-ratio: 1.35; }
+  .journal-heading { align-items: flex-start; flex-direction: column; gap: 20px; }
+  .photo-gallery { columns: 2; column-gap: 10px; }
+  .gallery-item { margin-bottom: 10px; }
+  .gallery-caption { padding: 30px 10px 10px; font-size: 10px; }
+  .gallery-toolbar { align-items: flex-start; }
+  .gallery-filters { gap: 6px; }
+  .gallery-filters button { padding: 8px 11px; font-size: 10px; }
+  .viewer-shell { padding: 12px; }
+  .photo-dialog { width: calc(100vw - 16px); height: 94dvh; }
   .personal-closing { margin-top: 46px; gap: 12px; }
   .personal-closing p { width: 100%; }
   .personal-closing a { margin-left: 0; margin-top: 8px; }
@@ -386,6 +425,7 @@ nav .section-nav[aria-current]::after, nav .section-nav:hover::after { transform
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
+  .interest-photo img, .gallery-item img { transition: none; }
 }
 </style>
 </head>
@@ -658,27 +698,97 @@ nav .section-nav[aria-current]::after, nav .section-nav:hover::after { transform
       </div>
       <div class="personal-grid">
         <article class="interest-card reveal">
-          <div class="photo-placeholder travel-placeholder" aria-label="Travel photo placeholder">
-            <svg class="interest-illustration" viewBox="0 0 240 180" fill="none" aria-hidden="true"><circle cx="120" cy="90" r="64"/><ellipse cx="120" cy="90" rx="30" ry="64"/><path d="M56 90h128M65 57c33 15 77 15 110 0M65 123c33-15 77-15 110 0"/><path class="route-line" d="M39 142c38-57 106 51 163-103"/><circle class="route-point" cx="202" cy="39" r="5"/></svg>
-            <span class="placeholder-corner">01 / Travel journal</span><span class="photo-note">Personal photos to come</span>
-          </div>
+          <a class="interest-photo" href="photos/coastal-overlook.webp" data-photo aria-label="Enlarge coastal harbor photograph">
+            <img src="photos/coastal-overlook.webp" alt="An ocean harbor and hillside town viewed from above" width="1280" height="960" loading="lazy" decoding="async">
+            <span class="interest-photo-label">01 / Travel journal</span>
+          </a>
           <div class="interest-copy"><p class="interest-label">Travel</p><h3>A change of scenery.</h3><p>I love the perspective that comes with being somewhere new: exploring a neighborhood, trying local food, and leaving room for an unexpected discovery.</p><span class="interest-footnote">New places. Fresh perspectives.</span></div>
         </article>
         <article class="interest-card reveal">
-          <div class="photo-placeholder fitness-placeholder" aria-label="Fitness photo placeholder">
-            <svg class="interest-illustration" viewBox="0 0 240 180" fill="none" aria-hidden="true"><circle class="fitness-ring" cx="120" cy="90" r="65"/><path d="M82 90h76M66 64h16v52H66zM50 74h16v32H50zM158 64h16v52h-16zM174 74h16v32h-16zM108 28h24M108 152h24"/></svg>
-            <span class="placeholder-corner">02 / In the gym</span><span class="photo-note">Personal photos to come</span>
-          </div>
+          <a class="interest-photo activity-photo" href="photos/room-to-move.webp" data-photo aria-label="Enlarge courts and green space photograph">
+            <img src="photos/room-to-move.webp" alt="An overhead view of tennis courts, a running track, and green space" width="960" height="1280" loading="lazy" decoding="async">
+            <span class="interest-photo-label">02 / Staying active</span>
+          </a>
           <div class="interest-copy"><p class="interest-label">Fitness</p><h3>Progress, one day at a time.</h3><p>The gym is where I reset and build consistency. I enjoy strength training and finding a routine that balances movement, recovery, and feeling good.</p><span class="interest-footnote">Show up. Keep moving.</span></div>
         </article>
         <article class="interest-card reveal">
-          <div class="photo-placeholder cooking-placeholder" aria-label="Cooking photo placeholder">
-            <svg class="interest-illustration" viewBox="0 0 240 180" fill="none" aria-hidden="true"><path d="M59 98h122a61 61 0 0 1-122 0ZM101 159h38M88 49c-16 14 16 16 0 31M120 36c-16 14 16 16 0 31M152 49c-16 14 16 16 0 31M171 87l26-48M181 87l26-48M53 111H40a13 13 0 0 1 0-26h20"/></svg>
-            <span class="placeholder-corner">03 / From my kitchen</span><span class="photo-note">Personal photos to come</span>
-          </div>
-          <div class="interest-copy"><p class="interest-label">Cooking</p><h3>Something good, made at home.</h3><p>I like trying recipes, experimenting with flavors, and making everyday meals a little more interesting. Cooking is a hands-on way to slow down and enjoy the process.</p><span class="interest-footnote">Good food. A little experimentation.</span></div>
+          <a class="interest-photo food-photo" href="photos/pizza-and-pasta.webp" data-photo aria-label="Enlarge pizza and pasta photograph">
+            <img src="photos/pizza-and-pasta.webp" alt="Pizza topped with greens and cheese alongside a bowl of seafood pasta" width="960" height="1280" loading="lazy" decoding="async">
+            <span class="interest-photo-label">03 / At the table</span>
+          </a>
+          <div class="interest-copy"><p class="interest-label">Food & Cooking</p><h3>A good meal, anywhere.</h3><p>I love cooking at home and discovering new flavors when I’m out. From trying a recipe to finding a memorable meal on a trip, food is one of my favorite ways to explore.</p><span class="interest-footnote">Good food. A little experimentation.</span></div>
         </article>
       </div>
+      <section class="photo-journal" id="personal-gallery" aria-labelledby="gallery-title">
+        <div class="journal-heading">
+          <div><p class="personal-kicker">A few moments along the way</p><h3 id="gallery-title">Through my lens.</h3></div>
+          <p>Places I’ve explored, meals I’ve enjoyed, and little things worth remembering.</p>
+        </div>
+        <div class="gallery-toolbar">
+          <div class="gallery-filters" role="group" aria-label="Filter photographs" hidden>
+            <button type="button" data-filter="all" aria-pressed="true">All moments</button>
+            <button type="button" data-filter="travel" aria-pressed="false">Travel</button>
+            <button type="button" data-filter="food" aria-pressed="false">Food & drink</button>
+            <button type="button" data-filter="everyday" aria-pressed="false">Everyday</button>
+          </div>
+          <p class="gallery-count" role="status" aria-live="polite">13 photographs</p>
+        </div>
+        <div class="photo-gallery">
+          <a class="gallery-item" href="photos/bay-bridge.webp" data-photo data-category="travel" data-caption="Across the bay" aria-label="Enlarge: Across the bay">
+            <img src="photos/bay-bridge.webp" alt="A suspension bridge and city skyline at dusk" width="960" height="1280" loading="lazy" decoding="async">
+            <span class="gallery-caption">Across the bay<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/palm-lined-architecture.webp" data-photo data-category="travel" data-caption="Under the palms" aria-label="Enlarge: Under the palms">
+            <img src="photos/palm-lined-architecture.webp" alt="Palm trees framing a white clock tower against a blue sky" width="960" height="1280" loading="lazy" decoding="async">
+            <span class="gallery-caption">Under the palms<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/harbor-sailboats.webp" data-photo data-category="travel" data-caption="A day by the harbor" aria-label="Enlarge: A day by the harbor">
+            <img src="photos/harbor-sailboats.webp" alt="Sailboats and a waterfront building beneath a clear blue sky" width="992" height="1280" loading="lazy" decoding="async">
+            <span class="gallery-caption">A day by the harbor<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/coastal-overlook.webp" data-photo data-category="travel" data-caption="The scenic route" aria-label="Enlarge: The scenic route">
+            <img src="photos/coastal-overlook.webp" alt="An ocean harbor and hillside town viewed from above" width="1280" height="960" loading="lazy" decoding="async">
+            <span class="gallery-caption">The scenic route<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/coastal-harbor.webp" data-photo data-category="travel" data-caption="A slower pace" aria-label="Enlarge: A slower pace">
+            <img src="photos/coastal-harbor.webp" alt="Boats in a blue harbor below white houses and palm trees" width="1280" height="960" loading="lazy" decoding="async">
+            <span class="gallery-caption">A slower pace<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/pizza-and-pasta.webp" data-photo data-category="food" data-caption="At the table" aria-label="Enlarge: At the table">
+            <img src="photos/pizza-and-pasta.webp" alt="Pizza topped with greens and cheese alongside a bowl of seafood pasta" width="960" height="1280" loading="lazy" decoding="async">
+            <span class="gallery-caption">At the table<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/seafood-bowl.webp" data-photo data-category="food" data-caption="Something worth trying" aria-label="Enlarge: Something worth trying">
+            <img src="photos/seafood-bowl.webp" alt="A seafood rice bowl with roe, sea urchin, and a golden egg yolk" width="960" height="1280" loading="lazy" decoding="async">
+            <span class="gallery-caption">Something worth trying<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/city-reflections.webp" data-photo data-category="travel" data-caption="City reflections" aria-label="Enlarge: City reflections">
+            <img src="photos/city-reflections.webp" alt="Cloud Gate reflecting the city and visitors at Millennium Park" width="720" height="1280" loading="lazy" decoding="async">
+            <span class="gallery-caption">City reflections<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/room-to-move.webp" data-photo data-category="everyday" data-caption="Room to move" aria-label="Enlarge: Room to move">
+            <img src="photos/room-to-move.webp" alt="An overhead view of tennis courts, a running track, and green space" width="960" height="1280" loading="lazy" decoding="async">
+            <span class="gallery-caption">Room to move<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/waterfront-from-above.webp" data-photo data-category="travel" data-caption="A different perspective" aria-label="Enlarge: A different perspective">
+            <img src="photos/waterfront-from-above.webp" alt="Waterfront buildings and boats seen from high above turquoise water" width="960" height="1280" loading="lazy" decoding="async">
+            <span class="gallery-caption">A different perspective<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/museum-details.webp" data-photo data-category="travel" data-caption="Looking up" aria-label="Enlarge: Looking up">
+            <img src="photos/museum-details.webp" alt="A museum facade with stone columns and flags under a blue sky" width="960" height="1280" loading="lazy" decoding="async">
+            <span class="gallery-caption">Looking up<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/sunny-afternoon.webp" data-photo data-category="food" data-caption="An afternoon pause" aria-label="Enlarge: An afternoon pause">
+            <img src="photos/sunny-afternoon.webp" alt="Two tropical drinks with pineapple and orchid garnishes on a sunny patio" width="960" height="1280" loading="lazy" decoding="async">
+            <span class="gallery-caption">An afternoon pause<span aria-hidden="true">+</span></span>
+          </a>
+          <a class="gallery-item" href="photos/little-souvenirs.webp" data-photo data-category="everyday" data-caption="Little souvenirs" aria-label="Enlarge: Little souvenirs">
+            <img src="photos/little-souvenirs.webp" alt="Two colorful souvenir plush keychains held against matching shirts" width="960" height="1280" loading="lazy" decoding="async">
+            <span class="gallery-caption">Little souvenirs<span aria-hidden="true">+</span></span>
+          </a>
+        </div>
+        <p class="gallery-hint">Select a photograph for a closer look.</p>
+      </section>
       <div class="personal-closing reveal"><span>Off the clock, still curious.</span><p>Usually thinking about the next trip, workout, or meal.</p><a href="mailto:wangzuoliang23@gmail.com">Say hello <span aria-hidden="true">↗</span></a></div>
     </section>
 
@@ -712,6 +822,14 @@ nav .section-nav[aria-current]::after, nav .section-nav:hover::after { transform
       </div>
     </section>
   </main>
+
+  <dialog class="photo-dialog" id="photo-viewer" aria-labelledby="viewer-title">
+    <div class="viewer-shell">
+      <div class="viewer-toolbar"><h2 id="viewer-title">Photo journal</h2><button type="button" class="viewer-close" aria-label="Close photo viewer">Close <span aria-hidden="true">×</span></button></div>
+      <figure class="viewer-figure"><img id="viewer-image" alt=""><figcaption id="viewer-caption"></figcaption></figure>
+      <div class="viewer-controls"><button type="button" class="viewer-previous" aria-label="Previous photograph">← Previous</button><span id="viewer-position" role="status" aria-live="polite"></span><button type="button" class="viewer-next" aria-label="Next photograph">Next →</button></div>
+    </div>
+  </dialog>
 
   <footer>
     <span>Zuoliang (David) Wang, CPA</span>
@@ -758,6 +876,76 @@ window.addEventListener("scroll", () => {
 }, { passive: true });
 window.addEventListener("resize", updateNavigation);
 updateNavigation();
+
+const galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
+const galleryFilters = document.querySelector(".gallery-filters");
+const photoCount = document.querySelector(".gallery-count");
+
+galleryFilters.querySelectorAll("button").forEach((button) => {
+  button.addEventListener("click", () => {
+    const category = button.dataset.filter;
+    galleryFilters.querySelectorAll("button").forEach((filter) => {
+      filter.setAttribute("aria-pressed", String(filter === button));
+    });
+    galleryItems.forEach((item) => {
+      item.hidden = category !== "all" && item.dataset.category !== category;
+    });
+    const visibleCount = galleryItems.filter((item) => !item.hidden).length;
+    photoCount.textContent = visibleCount + (visibleCount === 1 ? " photograph" : " photographs");
+  });
+});
+galleryFilters.hidden = false;
+
+const photoViewer = document.getElementById("photo-viewer");
+const viewerImage = document.getElementById("viewer-image");
+const viewerCaption = document.getElementById("viewer-caption");
+const viewerPosition = document.getElementById("viewer-position");
+let viewerItems = [];
+let viewerIndex = 0;
+let photoOpener = null;
+
+function showPhotograph(index) {
+  viewerIndex = (index + viewerItems.length) % viewerItems.length;
+  const item = viewerItems[viewerIndex];
+  const thumbnail = item.querySelector("img");
+  viewerImage.alt = thumbnail.alt;
+  viewerImage.src = item.getAttribute("href");
+  viewerCaption.textContent = item.dataset.caption;
+  viewerPosition.textContent = (viewerIndex + 1) + " / " + viewerItems.length;
+}
+
+if (typeof photoViewer.showModal === "function") {
+  document.querySelectorAll("a[data-photo]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const visibleItems = galleryItems.filter((item) => !item.hidden);
+      const matchingItem = galleryItems.find((item) => item.getAttribute("href") === link.getAttribute("href"));
+      if (!matchingItem) return;
+      event.preventDefault();
+      viewerItems = visibleItems.includes(matchingItem) ? visibleItems : galleryItems;
+      photoOpener = link;
+      showPhotograph(viewerItems.indexOf(matchingItem));
+      photoViewer.showModal();
+      document.documentElement.classList.add("photo-viewer-open");
+    });
+  });
+  document.querySelector(".viewer-close").addEventListener("click", () => photoViewer.close());
+  document.querySelector(".viewer-previous").addEventListener("click", () => showPhotograph(viewerIndex - 1));
+  document.querySelector(".viewer-next").addEventListener("click", () => showPhotograph(viewerIndex + 1));
+  photoViewer.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      showPhotograph(viewerIndex + (event.key === "ArrowLeft" ? -1 : 1));
+    }
+  });
+  photoViewer.addEventListener("click", (event) => {
+    if (event.target === photoViewer) photoViewer.close();
+  });
+  photoViewer.addEventListener("close", () => {
+    document.documentElement.classList.remove("photo-viewer-open");
+    viewerImage.removeAttribute("src");
+    if (photoOpener) photoOpener.focus({ preventScroll: true });
+  });
+}
 </script>
 </body>
 </html>
