@@ -20,6 +20,8 @@ body {
   line-height: 1.6;
 }
 a { color: inherit; text-decoration: none; }
+.ui-icon { display: inline-block; width: 18px; height: 18px; vertical-align: middle; flex-shrink: 0; stroke-width: 1.8; }
+.button > span { display: inline-flex; align-items: center; }
 
 .site-header {
   position: sticky;
@@ -278,7 +280,7 @@ h1 em { color: var(--accent); font-weight: 600; }
 .contact-links a:hover strong { color: var(--accent); }
 .contact-links span { color: rgba(245,241,232,.5); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; }
 .contact-links strong { font-size: 13px; transition: color .2s ease; }
-.contact-links b { color: var(--accent); }
+.contact-links b { display: inline-flex; align-items: center; justify-content: flex-end; color: var(--accent); }
 
 footer { display: flex; justify-content: space-between; padding: 24px clamp(24px, 8vw, 130px); color: rgba(255,255,255,.5); background: #000; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
 
@@ -351,7 +353,8 @@ nav .section-nav[aria-current]::after, nav .section-nav:hover::after { transform
 .viewer-toolbar h2 { margin: 0; color: #cbd5c2; font: 500 12px var(--sans); }
 .photo-dialog button { padding: 10px 13px; font: 600 12px var(--sans); color: #fff; background: #1c271e; border: 1px solid #354535; border-radius: 5px; cursor: pointer; }
 .photo-dialog button:hover { color: #000; background: var(--accent); }
-.viewer-close span { margin-left: 12px; font-size: 18px; }
+.viewer-close span { display: inline-flex; align-items: center; margin-left: 4px; }
+.viewer-toolbar button, .viewer-controls button { display: inline-flex; align-items: center; gap: 8px; }
 .viewer-figure { display: grid; grid-template-rows: minmax(0,1fr) auto; gap: 12px; min-height: 0; margin: 0; }
 .viewer-figure img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
 .viewer-figure figcaption { text-align: center; color: #cbd5c2; font-size: 12px; }
